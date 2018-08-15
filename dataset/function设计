@@ -1,0 +1,38 @@
+产生新的一列和产生新的变量是两个不同的概念。
+
+产生新的一列：
+对于连续性变量：
+多列整合成一列，用户可自定义公式去计算生成新的变量
+举例  col new = multiply(add(col1,col2)，col3)    #这里需要一套详细的语法规则
+此时产生的是新的一列，依然是time series column.
+对于character 变量：
+进行字符串根据某一规则进行拆分
+举例：2017-01-20 产分成3列 2017 01 20  (year,month,day)=split(date,"-")
+同样的道理可以多列字符串整合成一列
+
+产生新的变量：每个用户多行整合成一行
+从一列或多列时间序列中产生一个或多个模型变量
+
+对于连续性变量、离散整型变量（该变量有累加意义）：
+计算其平均值、方差、总和，
+举例：(col1_mean,col1_std,col1_total)=mean(col1),std(col1),total(col1)
+同样在用户整合多行数据，要具有filter功能 
+举例： new var = total(filter(col1>10)) 将col1那一列的所有大于10的值求和产生新的模型变量
+
+对于category变量分为两类：large_category,small_category
+
+small_category:该类变量有多少values，产生多少列，每一列计算的出现的次数
+
+
+
+large_category:
+该类变量还有大量的值，默认计算的新变量为：
+num_colvalue:用户该是个列总共有多少个不同的值
+first_value_names:用户该列出现次数最多的值是什么，同理
+second_value_num,third_value_num
+
+取出现次数最多的十个值，把剩余值归并为其他。按照small_category 的方式处理。
+
+
+
+
